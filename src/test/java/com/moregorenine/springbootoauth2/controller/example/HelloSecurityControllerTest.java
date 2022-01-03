@@ -21,7 +21,7 @@ class HelloSecurityControllerTest {
     void indexWhenUnAuthenticatedThenRedirect() throws Exception {
         // @formatter:off
         this.mockMvc.perform(get("/example/hello-security"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().is3xxRedirection());
         // @formatter:on
     }
 
