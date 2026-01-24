@@ -1,0 +1,21 @@
+/**
+ * Tabulator 전역 스타일
+ * Tailwind CSS와의 충돌 해결을 위한 스타일 오버라이드
+ */
+
+/* Tabulator 셀 내부의 모든 SVG 요소 */
+/* Tailwind의 기본 display: block을 inline-block으로 오버라이드 */
+.tabulator-cell {
+	svg {
+		display: inline-block !important;
+		vertical-align: middle;
+	}
+
+	/* Rating 컬럼의 별점 컨테이너 */
+	/* 별점이 가로로 정렬되도록 설정 */
+	&[tabulator-field='rating'] span {
+		display: inline-flex !important;
+		align-items: center;
+		gap: 2px;
+	}
+}
