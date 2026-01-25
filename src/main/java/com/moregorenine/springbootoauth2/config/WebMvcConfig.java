@@ -13,6 +13,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // SvelteKit 빌드 파일을 /dt-app 경로로 제공
         registry.addResourceHandler("/dt-app/**")
                 .addResourceLocations("classpath:/static/dt-app/build/");
+        
+        // service-worker.js를 루트 경로에서도 접근 가능하도록 설정
+        registry.addResourceHandler("/service-worker.js", "/mockServiceWorker.js")
+                .addResourceLocations("classpath:/static/dt-app/build/");
     }
 
     @Override

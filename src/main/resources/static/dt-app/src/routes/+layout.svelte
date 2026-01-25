@@ -41,7 +41,28 @@
   });
 
   // 앱 초기화 시 localStorage에서 인증 정보 복원
-  onMount(() => {
+  onMount(async () => {
+    // URL에서 JWT 토큰 확인 (OAuth2 로그인 후 리다이렉트)
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    
+    if (token) {
+      // JWT 토큰을 auth store에 저장
+      const { auth } = await import('$lib/stores/auth');
+      auth.setToken(token);
+      
+      // URL에서 token 파라미터 제거
+      window.history.replaceState({}, document.title, window.location.pathname);
+      
+      // 사용자 정보 로드
+      await auth.loadUser();
+    } else {
+      // 기존 토큰으로 인증 초기화
+      const { auth } = await import('$lib/stores/auth');
+      auth.init();
+    }
+    
+    // 기존 authStore 로직
     authStore.loadFromStorage();
   });
 </script>
