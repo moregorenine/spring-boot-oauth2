@@ -10,18 +10,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // SvelteKit 빌드 파일을 /dt-app 경로로 제공
-        registry.addResourceHandler("/dt-app/**")
-                .addResourceLocations("classpath:/static/dt-app/build/");
-        
-        // service-worker.js를 루트 경로에서도 접근 가능하도록 설정
-        registry.addResourceHandler("/service-worker.js", "/mockServiceWorker.js")
-                .addResourceLocations("classpath:/static/dt-app/build/");
+        // SvelteKit 빌드 파일을 루트 경로에서 제공
+        // API 경로를 제외한 모든 요청을 SvelteKit으로 라우팅
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/dt-app/build/")
+                .resourceChain(false);
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        // /dt-app/ 경로를 index.html로 forward
-        registry.addViewController("/dt-app/").setViewName("forward:/dt-app/index.html");
+        // 루트 경로를 index.html로 forward
+        registry.addViewController("/").setViewName("forward:/index.html");
     }
 }

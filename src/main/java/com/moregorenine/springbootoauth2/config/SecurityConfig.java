@@ -43,13 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // 요청 권한 설정
             .authorizeRequests()
                 // 정적 리소스는 인증 없이 접근 가능
-                .antMatchers("/dt-app/**", "/favicon.ico", "/service-worker.js", "/error").permitAll()
+                .antMatchers("/favicon.ico", "/service-worker.js", "/mockServiceWorker.js", "/_app/**", "/error").permitAll()
                 // OAuth2 로그인 엔드포인트는 인증 없이 접근 가능
                 .antMatchers("/oauth2/**", "/login/**").permitAll()
                 // API 엔드포인트는 인증 필요
                 .antMatchers("/api/**").authenticated()
-                // 나머지 요청은 OAuth2 인증 필요
-                .anyRequest().authenticated()
+                // 나머지 요청은 정적 리소스로 처리 (SvelteKit)
+                .anyRequest().permitAll()
                 .and()
             
             // OAuth2 로그인 설정

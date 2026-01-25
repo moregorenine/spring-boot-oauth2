@@ -29,7 +29,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String token = jwtUtil.generateToken(oauth2User);
         
         // SvelteKit 앱으로 리다이렉트 (JWT 토큰을 쿼리 파라미터로 전달)
-        String targetUrl = UriComponentsBuilder.fromUriString("/dt-app/")
+        String targetUrl = UriComponentsBuilder.fromUriString("/")
                 .queryParam("token", token)
                 .build()
                 .toUriString();
